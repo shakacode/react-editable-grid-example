@@ -1,0 +1,51 @@
+@mixin cell {
+  display: inline-block;
+  position: relative;
+  padding: .7em;
+  width: 100%;
+}
+
+@mixin vertical-center {
+  position: absolute;
+  display: block;
+  top: 0;
+  transform: translateY(-50%);
+}
+
+@mixin button(
+  $bg-color: #29d,
+  $text-color: #fff,
+  $text-shadow: none,
+  $padding: 1em 2em,
+  $border-radius: 0,
+  $use-border: false,
+  $border-width: 1px,
+  $border-color: #29d
+  ) {
+  display: inline-block;
+  padding: $padding;
+  background-color: $bg-color;
+  @if ($use-border and $border-color) {
+    border: $border-width solid $border-color;
+  } @else {
+    border: 0;
+  }
+  border-radius: $border-radius;
+  color: $text-color;
+  text-shadow: $text-shadow;
+  text-decoration: none;
+  line-height: normal;
+  cursor: pointer;
+  &:focus {
+    box-shadow: none;
+  }
+  &:disabled {
+    background-color: rgba($bg-color, 0.45) !important;
+    @if ($use-border and $border-color) {
+      border: $border-width solid $border-color !important;
+    } @else {
+      border: 0 !important;
+    }
+    text-shadow: none !important;
+  }
+}

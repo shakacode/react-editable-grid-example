@@ -1,0 +1,65 @@
+@import "app/shared/styles/mixins";
+
+.staticCell {
+  @include cell;
+  cursor: pointer;
+}
+
+.form {
+  display: block;
+  position: relative;
+
+  .input {
+    display: inline-block;
+    position: relative;
+    width: 80%;
+
+    input {
+      @include vertical-center;
+      left: 0;
+      width: 100%;
+      padding: 0 .7em;
+      border: 0;
+      border-bottom: 1px solid #aaa;
+
+      &:focus {
+        outline: none;
+        border-bottom: 1px solid #29d;
+      }
+      &:disabled {
+        background-color: #efefef;
+      }
+    }
+  }
+
+
+  .buttons {
+    display: inline-block;
+    position: relative;
+    width: 20%;
+
+    $buttons-padding: .3em .5em;
+    button, span {
+      @include vertical-center;
+      width: 50%;
+      font-size: .7em;
+    }
+
+    button {
+      @include button($bg-color: #8cc14c, $padding: $buttons-padding);
+      left: 0;
+      &:after {
+        content: "✓";
+      }
+    }
+
+    span {
+      @include button($bg-color: #aaa, $padding: $buttons-padding);
+      right: 0;
+      &:after {
+        content: "✘";
+      }
+    }
+  }
+
+}
