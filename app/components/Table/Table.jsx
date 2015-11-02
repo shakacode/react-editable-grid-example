@@ -37,7 +37,7 @@ export default class Table extends React.Component {
   }
 
 
-  _getStateValue(year, month) {
+  _getStateValue = (year, month) => {
     const { $$formState } = this.state;
     const $$yearState = $$formState.get(year);
 
@@ -47,7 +47,7 @@ export default class Table extends React.Component {
   }
 
 
-  _getEditableStatus(year, month) {
+  _getEditableStatus = (year, month) => {
     const { $$isEditable } = this.state;
     const $$yearState = $$isEditable.get(year);
 
@@ -57,7 +57,7 @@ export default class Table extends React.Component {
   }
 
 
-  _getProcessingStatus(year, month) {
+  _getProcessingStatus = (year, month) => {
     const { $$isProcessing } = this.state;
     const $$yearState = $$isProcessing.get(year);
 
@@ -67,7 +67,7 @@ export default class Table extends React.Component {
   }
 
 
-  _setStateValue(year, month, value) {
+  _setStateValue = (year, month, value) => {
     const { $$formState } = this.state;
 
     this.setState({
@@ -76,7 +76,7 @@ export default class Table extends React.Component {
   }
 
 
-  _setEditableStatus(year, month, isEditable, cb) {
+  _setEditableStatus = (year, month, isEditable, cb) => {
     const { $$isEditable } = this.state;
 
     this.setState({
@@ -85,7 +85,7 @@ export default class Table extends React.Component {
   }
 
 
-  _setProcessingStatus(year, month, isProcessing) {
+  _setProcessingStatus = (year, month, isProcessing) => {
     const { $$isProcessing } = this.state;
 
     this.setState({
@@ -94,7 +94,7 @@ export default class Table extends React.Component {
   }
 
 
-  _removeStateValue(year, month) {
+  _removeStateValue = (year, month) => {
     const { $$formState } = this.state;
 
     this.setState({
@@ -103,13 +103,13 @@ export default class Table extends React.Component {
   }
 
 
-  _saveStateValue(year, month) {
+  _saveStateValue = (year, month) => {
     const { apiCall } = this.props;
     const { $$formState } = this.state;
     const value = $$formState.getIn([year, month]);
 
     if (value) {
-      ::this._setProcessingStatus(year, month, true);
+      this._setProcessingStatus(year, month, true);
 
       apiCall({
         method: 'PATCH',
@@ -121,23 +121,23 @@ export default class Table extends React.Component {
 
           setLoadingStateTo(true);
           reloadData(() => {
-            ::this._setEditableStatus(year, month, false);
-            ::this._removeStateValue(year, month);
-            ::this._setProcessingStatus(year, month, false);
+            this._setEditableStatus(year, month, false);
+            this._removeStateValue(year, month);
+            this._setProcessingStatus(year, month, false);
             setLoadingStateTo(false);
           });
         })
         .catch(() => {
-          ::this._setProcessingStatus(year, month, false);
+          this._setProcessingStatus(year, month, false);
           // Handle...
         });
     } else {
-      ::this._setEditableStatus(year, month, false);
+      this._setEditableStatus(year, month, false);
     }
   }
 
 
-  _renderSpinner() {
+  _renderSpinner = () => {
     const { isLoading } = this.props;
 
     return (
@@ -148,14 +148,14 @@ export default class Table extends React.Component {
   }
 
 
-  _renderStaticCell(value) {
+  _renderStaticCell = value => {
     return (
       <StaticCell {...{ value }} />
     );
   }
 
 
-  _renderEditableCell(value, month, { year }) {
+  _renderEditableCell = (value, month, { year }) => {
     const actions = {
       getStateValue      : this._getStateValue.bind(this, year, month),
       setStateValue      : this._setStateValue.bind(this, year, month),
@@ -177,7 +177,7 @@ export default class Table extends React.Component {
 
     return (
       <section className={styles.tableSection}>
-        {::this._renderSpinner()}
+        {this._renderSpinner()}
         <DataTable
           rowHeight={50}
           rowGetter={key => data[key]}
@@ -190,7 +190,7 @@ export default class Table extends React.Component {
             label="Year"
             width={200}
             dataKey="year"
-            cellRenderer={::this._renderStaticCell}
+            cellRenderer={this._renderStaticCell}
           />
           {
             this.months.map(month => (
@@ -199,7 +199,7 @@ export default class Table extends React.Component {
                 label={month}
                 width={200}
                 dataKey={month.toLowerCase()}
-                cellRenderer={::this._renderEditableCell}
+                cellRenderer={this._renderEditableCell}
               />
             ))
           }
